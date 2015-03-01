@@ -56,7 +56,7 @@ class Tickets
     card_id         = activity['data']['card']['idShort']
     name            = ticket_name(activity)
 
-    "#{card_id.to_s}: #{name} - #{card_url(activity)}"
+    "#{$irc['control']['bold']}#{name}#{$irc['control']['bold']} #{card_url(activity)}"
   end
 
   # TODO: should be split up into a fetch, filter and announce methods, which are testable.
@@ -84,23 +84,25 @@ class Tickets
 
       case type
       when "createCard"
-        action = '[' + $config['labels']['createCard'] + '] ' + ticket_name_and_url(activity)
+        action = "#{$irc['color']['red']}[" + $config['labels']['createCard'] + "]#{$irc['control']['color']} " + ticket_name_and_url(activity)
       when "updateCard"
         if activityData['card'] && activityData['card']['closed'] == true
-          action = '[' + $config['labels']['closeCard'] + '] ' + ticket_name_and_url(activity)
+          action = "#{$irc['color']['darkgreen']}[" + $config['labels']['closeCard'] + "]#{$irc['control']['color']} " + ticket_name_and_url(activity)
         elsif activityData['listAfter'] && activityData['listBefore']
           before = activityData['listBefore']['name']
           after = activityData['listAfter']['name']
-          action = '[' + $config['labels']['moveCard'] + "] \"#{ticket_name(activity)}\" from \"#{before}\" to \"#{after}\""
+          action = "#{$irc['color']['violet']}[" + $config['labels']['moveCard'] + "]#{$irc['control']['color']} \"#{ticket_name(activity)}\" from \"#{$irc['control']['bold']}#{before}#{$irc['control']['bold']}\" to \"#{$irc['control']['bold']}#{after}#{$irc['control']['bold']}\""
         elsif !(activityData['old'] && activityData['old'].keys == ["pos"])
-          action = '[' + $config['labels']['updateCard'] + "] \"#{ticket_name(activity)}\" - #{card_url(activity)}"
+          action = "#{$irc['color']['orange']}[" + $config['labels']['updateCard'] + "]#{$irc['control']['color']} #{$irc['control']['bold']}#{ticket_name(activity)}#{$irc['control']['bold']} #{card_url(activity)}"
         end
       when "commentCard"
-        action = '[' + $config['labels']['commentCard'] + "] #{creator} on "  + ticket_name_and_url(activity)
-        mentions = activityData['text'].scan(/@(\w{2,20})/i).flatten
-
-        if (!mentions.empty?)
-          action += " [mentions " + mentions.join(', ') + ']'
+        text = activityData['text']
+        text.gsub!(/(\S)[^\S\n]*\n[^\S\n]*(\S)/, '\1 \2')
+        if text.length > 150
+          text.slice(0..150)
+          action = "#{$irc['color']['orange']}[" + $config['labels']['commentCard'] + "]#{$irc['control']['color']} #{$irc['control']['bold']}#{creator}#{$irc['control']['bold']} said \"#{text} [...]\" on " + ticket_name_and_url(activity)
+        else
+          action = "#{$irc['color']['orange']}[" + $config['labels']['commentCard'] + "]#{$irc['control']['color']} #{$irc['control']['bold']}#{creator}#{$irc['control']['bold']} said \"#{text}\" on " + ticket_name_and_url(activity)
         end
       end
 
