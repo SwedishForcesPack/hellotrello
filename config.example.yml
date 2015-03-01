@@ -14,3 +14,11 @@ teams:
     scrum_master: 'marco'         # This is optional, pings this user when a changes was detected
 
 timer_in_seconds: 60
+
+
+labels:
+  createCard:     'NEW'
+  closeCard:      'CLOSED'
+  moveCard:       'MOVED'
+  updateCard:     'UPDATE'
+  commentCard:    'COMMENT'

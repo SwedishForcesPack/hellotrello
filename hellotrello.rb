@@ -84,19 +84,19 @@ class Tickets
 
       case type
       when "createCard"
-        action = '[NEW]  ' + ticket_name_and_url(activity)
+        action = '[' + $config['labels']['createCard'] + '] ' + ticket_name_and_url(activity)
       when "updateCard"
         if activityData['card'] && activityData['card']['closed'] == true
-          action = "[CLOSED]  " + ticket_name_and_url(activity)
+          action = '[' + $config['labels']['closeCard'] + '] ' + ticket_name_and_url(activity)
         elsif activityData['listAfter'] && activityData['listBefore']
           before = activityData['listBefore']['name']
           after = activityData['listAfter']['name']
-          action ="[#{before}] > [#{after}]  \"#{ticket_name(activity)}\""
+          action = '[' + $config['labels']['moveCard'] + "] \"#{ticket_name(activity)}\" from \"#{before}\" to \"#{after}\""
         elsif !(activityData['old'] && activityData['old'].keys == ["pos"])
-          action ="[UPDATE]  \"#{ticket_name(activity)}\" - #{card_url(activity)}"
+          action = '[' + $config['labels']['updateCard'] + "] \"#{ticket_name(activity)}\" - #{card_url(activity)}"
         end
       when "commentCard"
-        action = "[COMMENT] #{creator} on "  + ticket_name_and_url(activity)
+        action = '[' + $config['labels']['commentCard'] + "] #{creator} on "  + ticket_name_and_url(activity)
         mentions = activityData['text'].scan(/@(\w{2,20})/i).flatten
 
         if (!mentions.empty?)
