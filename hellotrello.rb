@@ -135,7 +135,7 @@ class Tickets
     $lastChecked = Time.now
   end
 
-  timer 10.minutes, method: :send_activities
+  timer $config['timer_in_seconds'].seconds, method: :send_activities
 end
 bot = Cinch::Bot.new do
   configure do |c|
