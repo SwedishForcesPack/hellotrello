@@ -45,7 +45,7 @@ class Tickets
   end
 
   def card_url(activity)
-    "https://trello.com/card/#{activity['data']['board']['id']}/#{activity['data']['card']['idShort']}"
+    "https://trello.com/c/#{activity['data']['card']['shortLink']}"
   end
 
   def ticket_name(activity)
