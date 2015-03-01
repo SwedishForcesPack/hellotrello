@@ -2,6 +2,16 @@
 
 This bot checks a Trello board periodically and sends notifications of card creations and comments to an IRC chatroom. It works with multiple teams/chatrooms and can optionally ping a scrum master or team lead as a notification. It's built with Ruby and the [Cinch](https://github.com/cinchrb/cinch) framework.
 
+__Caution__: This is a custom version we use in our Admin IRC channels at YEAHWHAT?! Not sure if you want to use it. Your choise :)
+
+## Fork changes:
+
+* Configurable timer (for "fetching changes")
+* IRC color and control code support
+* Return short Trello links if possible
+* Configurable action prefixes/labels
+* Colorize some IRC messages 
+
 ## Setup
 -  Generate an API key at [trello.com/1/appKey](https://trello.com/1/appKey/generate)
 -  Make a copy of `config.example.yml` and rename it `config.yml`
