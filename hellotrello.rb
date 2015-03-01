@@ -6,6 +6,7 @@ require 'active_support/core_ext/object'
 require 'yaml'
 
 $config = YAML.load_file('config.yml')
+$irc = YAML.load_file('irc_formatting_codes.yml')
 
 def fetch(url, params = {})
   params = '?' + params.merge( $config['trello'] ).to_query
