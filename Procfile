@@ -1,0 +1,1 @@
+worker: ruby hellotrello.rb
