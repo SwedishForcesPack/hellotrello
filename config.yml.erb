@@ -1,0 +1,31 @@
+irc:
+  nick: sfp-trello-bot
+  server: dreamhack.se.quakenet.org
+  port: 6667
+
+trello:
+  key: <%= ENV['TRELLO_API_KEY'] %>
+  token: <%= ENV['TRELLO_API_TOKEN'] %>
+
+teams:
+  - channel: '#sfpdev'
+    board_id:
+      - 52d7d24b15b19e900e95cfed
+      - 544fa3ccafd01eccc5eb7c78
+      - 55d08338d790a1b8622e9d63
+      - 5727381bdd483f76f61e1276
+      - 544fa3a42a285e9b067d87d4
+      - 55237de97e4b96f95b1a2f01
+      - 55d0811016eb2cc223e9a283
+      - 55d0814173b2bf87c69cccdf
+      - 55d081b7620653ce5fb5e4cd
+      - 570cb464c08537895158d203
+
+timer_in_seconds: 60
+
+labels:
+  createCard: 'NEW'
+  closeCard: 'CLOSED'
+  moveCard: 'MOVED'
+  updateCard: 'UPDATE'
+  commentCard: 'COMMENT'

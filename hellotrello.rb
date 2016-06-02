@@ -4,8 +4,10 @@ require 'net/http'
 require 'open-uri'
 require 'active_support/core_ext/object'
 require 'yaml'
+require 'erb'
 
-$config = YAML.load_file('config.yml')
+config_template = ERB.new File.new('config.yml.erb').read
+$config = YAML.load config_template.result(binding)
 $irc = YAML.load_file('irc_formatting_codes.yml')
 
 def fetch(url, params = {})
