@@ -51,7 +51,7 @@ class Tickets
   end
 
   def ticket_name(activity)
-    activity['data']['card']['name']
+    "#{activity['data']['board']['name']} - #{activity['data']['card']['name']}"
   end
 
   def ticket_name_and_url(activity)
